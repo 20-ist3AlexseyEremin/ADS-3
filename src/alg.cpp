@@ -16,49 +16,60 @@ int priority(char sym) {
 
 std::string infx2pstfx(std::string inf) {
         TStack<char> stack;
-        std::string res;
+        std::string result;
         for (int i = 0; i < inf.length(); ++i) {
-                if (isdigit(inf[i])) {
-                res += inf[i];
-                res += ' ';
+                if (isdigit(inf[i]) ) {
+                        while (isdigit(inf[i])) {
+                                result += inf[i];
+                                i++;
+                        }
+                        i--;
+                        result += ' ';
+                }
         }
         else if ((inf[i] == '(') || (stack.isEmpty()) || (priority(inf[i]) > priority(stack.get()))) {
                 stack.push(inf[i]);
         }
         else if (inf[i] == ')') {
-                char x = stack.get();
+                char l = stack.get();
                 stack.pop();
-        while (x != '(') {
-                res += x;
-                res += ' ';
-                x = stack.get();
+        while (l!= '(') {
+                result += l;
+                result = ' ';
+                l = stack.get();
                 stack.pop();
         }
         }
         else {
                 while (!stack.isEmpty() && (priority(stack.get()) >= priority(inf[i]))) {
-        res += stack.get();
-        res += ' ';
+        result += stack.get();
+        result += ' ';
         stack.pop();
         }
         stack.push(inf[i]);
         }
         }
                 while (!stack.isEmpty()) {
-                res += stack.get();
-                res += ' ';
+                result += stack.get();
+                result += ' ';
                 stack.pop();
         }
-        res.pop_back();
-        return res;
+        result.pop_back();
+        return result;
         }
 
 int eval(std::string pst) {
+        std::string str2;
         TStack<int> stack;
         for (int i = 0; i < pst.length(); i++) {
                 if (isdigit(pst[i])) {
-        stack.push( pst[i] - '0' );
-        }
+                        while (isdigit(pst[i])) {
+                                str2 += pst[i];
+                                i++;
+                        }
+                stack.push( stoi(str2) );
+                str2.clear();
+                }
         else if (pst[i] != ' ') {
                 int num2 = stack.get();
                 stack.pop();
