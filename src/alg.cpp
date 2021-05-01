@@ -4,21 +4,21 @@
 
 
 int priority(char sym) {
-	if (sym == '(')
-		return 0;
-	else if (sym == ')')
-		return 1;
-	else if ((sym == '+') || (sym == '-'))
-		return 2;
-	else
-		return 3;
+        if (sym == '(')
+                return 0;
+        else if (sym == ')')
+                return 1;
+        else if ((sym == '+') || (sym == '-'))
+                return 2;
+        else
+                return 3;
 }
 
 std::string infx2pstfx(std::string inf) {
         TStack<char> stack;
         std::string result;
         for (int i = 0; i < inf.length(); ++i) {
-                if (isdigit(inf[i]) ) {
+                if (isdigit(inf[i])) {
                         while (isdigit(inf[i])) {
                                 result += inf[i];
                                 i++;
@@ -26,11 +26,10 @@ std::string infx2pstfx(std::string inf) {
                         i--;
                         result += ' ';
                 }
-        }
-        else if ((inf[i] == '(') || (stack.isEmpty()) || (priority(inf[i]) > priority(stack.get()))) {
+        } else if ((inf[i] == '(') || (stack.isEmpty()) 
+        || (priority(inf[i]) > priority(stack.get()))) {
                 stack.push(inf[i]);
-        }
-        else if (inf[i] == ')') {
+        } else if (inf[i] == ')') {
                 char l = stack.get();
                 stack.pop();
         while (l!= '(') {
@@ -39,8 +38,7 @@ std::string infx2pstfx(std::string inf) {
                 l = stack.get();
                 stack.pop();
         }
-        }
-        else {
+        } else {
                 while (!stack.isEmpty() && (priority(stack.get()) >= priority(inf[i]))) {
         result += stack.get();
         result += ' ';
@@ -67,10 +65,9 @@ int eval(std::string pst) {
                                 str2 += pst[i];
                                 i++;
                         }
-                stack.push( stoi(str2) );
+                stack.push(stoi(str2));
                 str2.clear();
-                }
-        else if (pst[i] != ' ') {
+                } else if (pst[i] != ' ') {
                 int num2 = stack.get();
                 stack.pop();
                 int num1 = stack.get();
@@ -83,4 +80,3 @@ int eval(std::string pst) {
         }
                 return stack.get();
         }
-      
