@@ -15,7 +15,7 @@ int priority(char sym) {
 }
 
 std::string infx2pstfx(std::string inf) {
-        Stack<char> stack;
+        TStack<char> stack;
         std::string result;
         for (int i = 0; i < inf.length(); ++i) {
                 if (isdigit(inf[i])) {
