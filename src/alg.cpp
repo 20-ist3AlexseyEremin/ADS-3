@@ -15,45 +15,45 @@ int priority(char sym) {
 }
 
 std::string infx2pstfx(std::string inf) {
-        TStack<char> stack;
+        Stack<char> stack;
         std::string result;
         for (int i = 0; i < inf.length(); ++i) {
                 if (isdigit(inf[i])) {
-                        while (isdigit(inf[i])) {
-                                result += inf[i];
-                                i++;
-                        }
+                while (isdigit(inf[i])) {
+                        result += inf[i];
+                        i++;
+                }
                         i--;
                         result += ' ';
-        } else if ((inf[i] == '(') || (stack.isEmpty())
-        || (priority(inf[i]) > priority(stack.get()))) {
-                stack.push(inf[i]);
-        } else if (inf[i] == ')') {
+                } else if ((inf[i] == '(') || (stack.isEmpty())
+                || (priority(inf[i]) > priority(stack.get()))) {
+                        stack.push(inf[i]);
+                } else if (inf[i] == ')') {
                 char l = stack.get();
-                stack.pop();
-        while (l!= '(') {
-                result += l;
-                result = ' ';
-                l = stack.get();
-                stack.pop();
-        }
-        } else {
+                        stack.pop();
+                        while (l != '(') {
+                                result += l;
+                                result += ' ';
+                                l = stack.get();
+                                stack.pop();
+                        }
+                } else {
                 while (!stack.isEmpty() &&
-                (priority(stack.get()) >= priority(inf[i]))) {
-        result += stack.get();
-        result += ' ';
-        stack.pop();
-        }
-        stack.push(inf[i]);
-        }
-        }
+                        (priority(stack.get()) >= priority(inf[i]))) {
+                        result += stack.get();
+                        result += ' ';
+                        stack.pop();
+                }
+                        stack.push(inf[i]);
+                }
+                }
                 while (!stack.isEmpty()) {
-                result += stack.get();
-                result += ' ';
-                stack.pop();
-        }
-        result.pop_back();
-        return result;
+                        result += stack.get();
+                        result += ' ';
+                        stack.pop();
+                }
+                result.pop_back();
+                return result;
         }
 
 int eval(std::string pst) {
